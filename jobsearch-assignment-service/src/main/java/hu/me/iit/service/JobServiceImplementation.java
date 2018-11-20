@@ -56,4 +56,24 @@ public class JobServiceImplementation implements JobService {
         }
         return result;
     }
+
+    @Override
+    public Collection<JobListing> getJobsByTitle(String title) {
+        Collection<JobListing> result = new LinkedList<>();
+        for (JobListing jobListing : jobListings) {
+            if (jobListing.getTitle().equals(title))
+                result.add(jobListing);
+        }
+        return result;
+    }
+
+    @Override
+    public Collection<JobListing> getJobsByCompany(String company) {
+        Collection<JobListing> result = new LinkedList<>();
+        for (JobListing jobListing : jobListings) {
+            if (jobListing.getCompany().equals(company))
+                result.add(jobListing);
+        }
+        return result;
+    }
 }

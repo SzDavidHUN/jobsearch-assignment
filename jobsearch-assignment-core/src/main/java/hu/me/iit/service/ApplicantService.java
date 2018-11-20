@@ -19,7 +19,7 @@ public interface ApplicantService {
 
     Collection<ApplicantProfile> getApplicantByEkkrOrHigher(int ekkrLevel);
 
-    Collection<ApplicantProfile> getApplicantByEkkrOrLover(int ekkrLevel);
+    Collection<ApplicantProfile> getApplicantByEkkrOrLower(int ekkrLevel);
 
     Collection<ApplicantProfile> getApplicantByEkkrBetween(int ekkrLevel1, int ekkrLevel2);
 

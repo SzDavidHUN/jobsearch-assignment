@@ -14,9 +14,23 @@ public class JobController {
     @Autowired
     private JobService jobService;
 
-    @GetMapping(value = "/jobs/all")
+    @GetMapping("/jobs/all")
     public Collection<JobListing> getJobListings() {
         return jobService.getJobListings();
+    }
+
+    @GetMapping("/jobs/bytitle/{title}")
+    public Collection<JobListing> getJobsByTitle(
+            @PathVariable String title
+    ) {
+        return jobService.getJobsByTitle(title);
+    }
+
+    @GetMapping("/jobs/bycompany/{company}")
+    public Collection<JobListing> getJobsByCompany(
+            @PathVariable String company
+    ) {
+        return jobService.getJobsByCompany(company);
     }
 
     @GetMapping("/jobs/bycategory/{category}")
