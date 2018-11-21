@@ -1,5 +1,6 @@
 package hu.me.iit.service;
 
+import hu.me.iit.dao.ObjectRepository;
 import hu.me.iit.model.ApplicantProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,22 +11,29 @@ import java.util.LinkedList;
 
 @Service
 public class ApplicantServiceImplementation implements ApplicantService {
+
     private Collection<ApplicantProfile> applicantProfiles;
+
+    @Autowired
+    private ObjectRepository<ApplicantProfile> applicantsRepository;
 
     @PostConstruct
     private void init() {
+        //Collection<ApplicantProfile> applicantProfiles;
         applicantProfiles = new LinkedList<>();
         applicantProfiles.add(new ApplicantProfile("Kovács Józsefné Kis Marika", "Csajágaröcsöge", 1, 1948));
         applicantProfiles.add(new ApplicantProfile("Nagy Géza", "Pilisborzasztó", 4, 1980));
         applicantProfiles.add(new ApplicantProfile("Pintér Csaba", "Bivalybasznád", 6, 1995));
         applicantProfiles.add(new ApplicantProfile("Farkas Szilárd", "Bokoraljapusztaszéle", 6, 1970));
+        applicantsRepository.saveAll(applicantProfiles);
     }
 
     //http://dev.wiki.szie.hu/wiki/europai-es-magyar-kepesitesi-keretrendszerek-neptunban
 
     @Override
     public Collection<ApplicantProfile> getAllApplicant() {
-        return applicantProfiles;
+        return applicantsRepository.getAll();
+        //return applicantProfiles;
     }
 
     @Override
