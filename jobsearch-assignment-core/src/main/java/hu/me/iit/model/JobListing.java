@@ -15,9 +15,6 @@ public class JobListing {
         this.category = category;
     }
 
-    public JobListing() {
-    }
-
     public String getTitle() {
         return title;
     }
