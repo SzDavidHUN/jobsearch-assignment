@@ -1,13 +1,14 @@
 package hu.me.iit.service;
 
 import hu.me.iit.model.ApplicantProfile;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.LinkedList;
 
-@Component
+@Service
 public class ApplicantServiceImplementation implements ApplicantService {
     private Collection<ApplicantProfile> applicantProfiles;
 

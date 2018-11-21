@@ -1,14 +1,14 @@
 package hu.me.iit.service;
 
 import hu.me.iit.model.JobListing;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
-@Component
+@Service
 public class JobServiceImplementation implements JobService {
 
     private Collection<JobListing> jobListings;
