@@ -1,11 +1,20 @@
 package hu.me.iit.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
+import java.util.UUID;
 
+@Entity
 public class ApplicantProfile {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
     private String name;
     private String city;
-    private int ekkr;
+    private int ekkr; //http://dev.wiki.szie.hu/wiki/europai-es-magyar-kepesitesi-keretrendszerek-neptunban
     private int born;
 
     public ApplicantProfile(String name, String city, int ekkr, int born) {
@@ -13,6 +22,9 @@ public class ApplicantProfile {
         this.city = city;
         this.ekkr = ekkr;
         this.born = born;
+    }
+
+    private ApplicantProfile() {
     }
 
     public String getName() {

@@ -35,27 +35,6 @@ public class ApplicantController {
         return applicantService.getApplicantByCity(city);
     }
 
-    @GetMapping("/applicants/byekkr/{ekkr}")
-    public Collection<ApplicantProfile> getApplicantProfilesByEkkr(
-            @PathVariable int ekkr
-    ) {
-        return applicantService.getApplicantByEkkr(ekkr);
-    }
-
-    @GetMapping("/applicants/byekkr")
-    public ResponseEntity<Collection<ApplicantProfile>> getApplicantProfilesByEkkr(
-            @RequestParam(required = false) Integer lower,
-            @RequestParam(required = false) Integer higher
-    ) {
-        if (lower != null && higher != null)
-            return ResponseEntity.ok(applicantService.getApplicantByEkkrBetween(lower, higher));
-        if (lower != null)
-            return ResponseEntity.ok(applicantService.getApplicantByEkkrOrHigher(lower));
-        if (higher != null)
-            return ResponseEntity.ok(applicantService.getApplicantByEkkrOrLower(higher));
-        return ResponseEntity.badRequest().body(null);
-    }
-
     @GetMapping("/applicants/byborn/{born}")
     public Collection<ApplicantProfile> getApplicantprofilesByBorn(
             @PathVariable int born
@@ -74,6 +53,28 @@ public class ApplicantController {
             return ResponseEntity.ok(applicantService.getApplicantByBornOrBefore(before));
         if (after != null)
             return ResponseEntity.ok(applicantService.getApplicantByBornOrAfter(after));
+        return ResponseEntity.badRequest().body(null);
+    }
+
+    @GetMapping("/applicants/byekkr/{ekkr}")
+    public Collection<ApplicantProfile> getApplicantProfilesByEkkr(
+            @PathVariable int ekkr
+    ) {
+        return applicantService.getApplicantByEkkr(ekkr);
+    }
+
+    @GetMapping("/applicants/byekkr")
+    public ResponseEntity<Collection<ApplicantProfile>> getApplicantProfilesByEkkr(
+            @RequestParam(required = false) Integer lowerLimit,
+            @RequestParam(required = false) Integer higherLimit
+    ) {
+        if (lowerLimit != null && higherLimit != null)
+            return ResponseEntity.ok(applicantService.getApplicantByEkkrBetween(lowerLimit, higherLimit));
+        if (lowerLimit != null)
+            return ResponseEntity.ok(applicantService.getApplicantByEkkrOrHigher(lowerLimit));
+        if (higherLimit != null) {
+            return ResponseEntity.ok(applicantService.getApplicantByEkkrOrLower(higherLimit));
+        }
         return ResponseEntity.badRequest().body(null);
     }
 }

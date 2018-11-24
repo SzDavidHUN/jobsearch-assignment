@@ -5,6 +5,11 @@ import hu.me.iit.model.ApplicantProfile;
 import java.util.Collection;
 
 public interface ApplicantService {
+
+    Collection<ApplicantProfile> getApplicantByName(String name);
+
+    Collection<ApplicantProfile> getApplicantByCity(String city);
+
     Collection<ApplicantProfile> getAllApplicant();
 
     Collection<ApplicantProfile> getApplicantByBorn(int born);
@@ -22,8 +27,4 @@ public interface ApplicantService {
     Collection<ApplicantProfile> getApplicantByEkkrOrLower(int ekkrLevel);
 
     Collection<ApplicantProfile> getApplicantByEkkrBetween(int ekkrLevel1, int ekkrLevel2);
-
-    Collection<ApplicantProfile> getApplicantByName(String name);
-
-    Collection<ApplicantProfile> getApplicantByCity(String city);
 }

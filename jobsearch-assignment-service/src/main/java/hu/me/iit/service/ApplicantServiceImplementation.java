@@ -1,154 +1,90 @@
 package hu.me.iit.service;
 
-import hu.me.iit.dao.ObjectRepository;
+import hu.me.iit.dao.ApplicantsRepository;
 import hu.me.iit.model.ApplicantProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
-import java.util.LinkedList;
 
 @Service
 public class ApplicantServiceImplementation implements ApplicantService {
 
-    private Collection<ApplicantProfile> applicantProfiles;
-
     @Autowired
-    private ObjectRepository<ApplicantProfile> applicantsRepository;
+    private ApplicantsRepository applicantsRepository;
 
     @PostConstruct
     private void init() {
-        //Collection<ApplicantProfile> applicantProfiles;
-        applicantProfiles = new LinkedList<>();
-        applicantProfiles.add(new ApplicantProfile("Kovács Józsefné Kis Marika", "Csajágaröcsöge", 1, 1948));
-        applicantProfiles.add(new ApplicantProfile("Nagy Géza", "Pilisborzasztó", 4, 1980));
-        applicantProfiles.add(new ApplicantProfile("Pintér Csaba", "Bivalybasznád", 6, 1995));
-        applicantProfiles.add(new ApplicantProfile("Farkas Szilárd", "Bokoraljapusztaszéle", 6, 1970));
-        applicantsRepository.saveAll(applicantProfiles);
+        applicantsRepository.save(new ApplicantProfile("Kovács Józsefné Kis Marika", "Csajágaröcsöge", 1, 1948));
+        applicantsRepository.save(new ApplicantProfile("Nagy Géza", "Pilisborzasztó", 4, 1980));
+        applicantsRepository.save(new ApplicantProfile("Pintér Csaba", "Bivalybasznád", 6, 1995));
+        applicantsRepository.save(new ApplicantProfile("Farkas Szilárd", "Bokoraljapusztaszéle", 6, 1970));
     }
-
-    //http://dev.wiki.szie.hu/wiki/europai-es-magyar-kepesitesi-keretrendszerek-neptunban
 
     @Override
     public Collection<ApplicantProfile> getAllApplicant() {
-        return applicantsRepository.getAll();
-        //return applicantProfiles;
+        return applicantsRepository.findAll();
+    }
+
+    @Override
+    public Collection<ApplicantProfile> getApplicantByName(String name) {
+        return applicantsRepository.findByName(name);
+    }
+
+    @Override
+    public Collection<ApplicantProfile> getApplicantByCity(String city) {
+        return applicantsRepository.findByCity(city);
     }
 
     @Override
     public Collection<ApplicantProfile> getApplicantByBorn(int born) {
-        Collection<ApplicantProfile> result = new LinkedList<>();
-        for (ApplicantProfile applicantProfile : applicantProfiles) {
-            if (applicantProfile.getBorn() == born)
-                result.add(applicantProfile);
-        }
-        return result;
+        return applicantsRepository.findByBorn(born);
     }
 
     @Override
     public Collection<ApplicantProfile> getApplicantByBornOrAfter(int born) {
-        Collection<ApplicantProfile> result = new LinkedList<>();
-        for (ApplicantProfile applicantProfile : applicantProfiles) {
-            if (applicantProfile.getBorn() >= born)
-                result.add(applicantProfile);
-        }
-        return result;
+        return applicantsRepository.findByBornGreaterThanEqual(born);
     }
 
     @Override
     public Collection<ApplicantProfile> getApplicantByBornOrBefore(int born) {
-        Collection<ApplicantProfile> result = new LinkedList<>();
-        for (ApplicantProfile applicantProfile : applicantProfiles) {
-            if (applicantProfile.getBorn() <= born)
-                result.add(applicantProfile);
-        }
-        return result;
+        return applicantsRepository.findByBornLessThanEqual(born);
     }
 
     @Override
     public Collection<ApplicantProfile> getApplicantByBornBetween(int born1, int born2) {
-        if (born1 > born2) {
-            int tmp;
-            tmp = born1;
+        if (born1 < born2) {
+            int tmp = born1;
             born1 = born2;
             born2 = tmp;
         }
-        Collection<ApplicantProfile> result = new LinkedList<>();
-        for (ApplicantProfile applicantProfile : applicantProfiles) {
-            if (applicantProfile.getBorn() >= born1 && applicantProfile.getBorn() <= born2)
-                result.add(applicantProfile);
-        }
-        return result;
+        return applicantsRepository.findByBornLessThanEqualAndBornGreaterThanEqual(born1, born2);
     }
 
     @Override
     public Collection<ApplicantProfile> getApplicantByEkkr(int ekkrLevel) {
-        Collection<ApplicantProfile> result = new LinkedList<>();
-        for (ApplicantProfile applicantProfile : applicantProfiles) {
-            if (applicantProfile.getEkkr() == ekkrLevel)
-                result.add(applicantProfile);
-        }
-        return result;
-
+        return applicantsRepository.findByEkkr(ekkrLevel);
     }
 
     @Override
     public Collection<ApplicantProfile> getApplicantByEkkrOrHigher(int ekkrLevel) {
-        Collection<ApplicantProfile> result = new LinkedList<>();
-        for (ApplicantProfile applicantProfile : applicantProfiles) {
-            if (applicantProfile.getEkkr() <= ekkrLevel)
-                result.add(applicantProfile);
-        }
-        return result;
-
+        return applicantsRepository.findByEkkrGreaterThanEqual(ekkrLevel);
     }
 
     @Override
     public Collection<ApplicantProfile> getApplicantByEkkrOrLower(int ekkrLevel) {
-        Collection<ApplicantProfile> result = new LinkedList<>();
-        for (ApplicantProfile applicantProfile : applicantProfiles) {
-            if (applicantProfile.getEkkr() >= ekkrLevel)
-                result.add(applicantProfile);
-        }
-        return result;
-
+        return applicantsRepository.findByEkkrLessThanEqual(ekkrLevel);
     }
 
     @Override
     public Collection<ApplicantProfile> getApplicantByEkkrBetween(int ekkrLevel1, int ekkrLevel2) {
-        if (ekkrLevel1 > ekkrLevel2) {
+        if (ekkrLevel1 < ekkrLevel2) {
             int tmp;
             tmp = ekkrLevel1;
             ekkrLevel1 = ekkrLevel2;
             ekkrLevel2 = tmp;
         }
-        Collection<ApplicantProfile> result = new LinkedList<>();
-        for (ApplicantProfile applicantProfile : applicantProfiles) {
-            if (applicantProfile.getEkkr() >= ekkrLevel1 && applicantProfile.getEkkr() <= ekkrLevel2)
-                result.add(applicantProfile);
-        }
-        return result;
-
-    }
-
-    @Override
-    public Collection<ApplicantProfile> getApplicantByName(String name) {
-        Collection<ApplicantProfile> result = new LinkedList<>();
-        for (ApplicantProfile applicantProfile : applicantProfiles) {
-            if (applicantProfile.getName().equals(name))
-                result.add(applicantProfile);
-        }
-        return result;
-    }
-
-    @Override
-    public Collection<ApplicantProfile> getApplicantByCity(String city) {
-        Collection<ApplicantProfile> result = new LinkedList<>();
-        for (ApplicantProfile applicantProfile : applicantProfiles) {
-            if (applicantProfile.getCity().equals(city))
-                result.add(applicantProfile);
-        }
-        return result;
+        return applicantsRepository.findByEkkrLessThanEqualAndEkkrGreaterThanEqual(ekkrLevel1, ekkrLevel2);
     }
 }
