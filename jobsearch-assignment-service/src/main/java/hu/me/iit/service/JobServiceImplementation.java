@@ -1,6 +1,7 @@
 package hu.me.iit.service;
 
 import hu.me.iit.dao.JobsRepository;
+import hu.me.iit.model.JobCategory;
 import hu.me.iit.model.JobListing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,25 +21,25 @@ public class JobServiceImplementation implements JobService {
                 "Web fejlesztő",
                 "Web fejlesztésére felelős akárki",
                 "Pók Kft",
-                "IT"
+                JobCategory.IT
         ));
         jobsRepository.save(new JobListing(
                 "Embed fejlesztő",
                 "Beágyazott rendszerek fejletésévelhez keresünk munkatársat",
                 "Ágyazó Kft",
-                "IT"
+                JobCategory.IT
         ));
         jobsRepository.save(new JobListing(
                 "Síküveg restaurátor asszisztens",
                 "ö8243jinh4mihbn4reöhb",
                 "Avandzsá Bt",
-                "Takarítás"
+                JobCategory.CLEANING
         ));
         jobsRepository.save(new JobListing(
                 "Takarító néni",
                 "Igényes informatikai vállalat keres kedves takarító nénit nappali munkarenddel",
                 "Clean-Office Kft",
-                "Takarítás"
+                JobCategory.CLEANING
         ));
 
     }
@@ -53,7 +54,7 @@ public class JobServiceImplementation implements JobService {
     }
 
     @Override
-    public Collection<JobListing> getJobsByCategory(String category) {
+    public Collection<JobListing> getJobsByCategory(JobCategory category) {
         return jobsRepository.findByCategory(category);
     }
 

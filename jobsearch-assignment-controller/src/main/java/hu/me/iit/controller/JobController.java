@@ -1,5 +1,6 @@
 package hu.me.iit.controller;
 
+import hu.me.iit.model.JobCategory;
 import hu.me.iit.model.JobListing;
 import hu.me.iit.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class JobController {
 
     @GetMapping("/jobs/bycategory/{category}")
     public Collection<JobListing> getJobsByCategory(
-            @PathVariable("category") String category
+            @PathVariable("category") JobCategory category
     ) {
         return jobService.getJobsByCategory(category);
     }

@@ -1,9 +1,6 @@
 package hu.me.iit.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -15,9 +12,10 @@ public class JobListing {
     private String title;
     private String description;
     private String company;
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private JobCategory category;
 
-    public JobListing(String title, String description, String company, String category) {
+    public JobListing(String title, String description, String company, JobCategory category) {
         this.title = title;
         this.description = description;
         this.company = company;
@@ -51,11 +49,11 @@ public class JobListing {
         this.company = company;
     }
 
-    public String getCategory() {
+    public JobCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(JobCategory category) {
         this.category = category;
     }
 
