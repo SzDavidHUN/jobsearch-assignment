@@ -34,6 +34,14 @@ public class JobDTO {
 
     public static JobListing dtoToModel(JobDTO jobDTO) {
         JobCategory category = null;
+        if (jobDTO.getTitle().isEmpty())
+            throw new DtoConversionException("Title field is empty");
+        if (jobDTO.getDescription().isEmpty())
+            throw new DtoConversionException("Description field is empty");
+        if (jobDTO.getCategory().isEmpty())
+            throw new DtoConversionException("Category field is empty");
+        if (jobDTO.getCompany().isEmpty())
+            throw new DtoConversionException("Company field is empty");
         for (JobCategory jobCategory : JobCategory.values()) {
             if (jobCategory.name().equalsIgnoreCase(jobDTO.getCategory()))
                 category = jobCategory;

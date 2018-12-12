@@ -30,6 +30,14 @@ public class ApplicantDTO {
     public static ApplicantProfile dtoToModel(ApplicantDTO applicantDto) throws DtoConversionException {
         int born = Integer.parseInt(applicantDto.getBorn());
         int ekkr = Integer.parseInt(applicantDto.getEkkr());
+        if (applicantDto.getEkkr().isEmpty())
+            throw new DtoConversionException("EKKR field is empty");
+        if (applicantDto.getBorn().isEmpty())
+            throw new DtoConversionException("Born field is empty");
+        if (applicantDto.getName().isEmpty())
+            throw new DtoConversionException("Name field is empty");
+        if (applicantDto.getCity().isEmpty())
+            throw new DtoConversionException("City field is empty");
         if (born < 1990 || born > 2018)
             throw new DtoConversionException("Incorrect birth year");
         if (ekkr < 0 || Integer.parseInt(applicantDto.getEkkr()) > 5)
