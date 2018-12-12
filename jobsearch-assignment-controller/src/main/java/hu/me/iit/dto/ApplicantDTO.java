@@ -40,7 +40,7 @@ public class ApplicantDTO {
             throw new DtoConversionException("City field is empty");
         if (born < 1990 || born > 2018)
             throw new DtoConversionException("Incorrect birth year");
-        if (ekkr < 0 || Integer.parseInt(applicantDto.getEkkr()) > 5)
+        if (ekkr < 0 || ekkr > 8)
             throw new DtoConversionException("invalid Ekkr level");
         return new ApplicantProfile(
                 applicantDto.getName(),
