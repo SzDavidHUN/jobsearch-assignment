@@ -1,5 +1,9 @@
 package hu.me.iit.dto;
 
+import hu.me.iit.exception.DtoConversionException;
+import hu.me.iit.model.JobCategory;
+import hu.me.iit.model.JobListing;
+
 import java.util.Objects;
 
 public class JobDTO {
@@ -17,6 +21,32 @@ public class JobDTO {
         this.description = description;
         this.company = company;
         this.category = category;
+    }
+
+    public static JobDTO modelToDto(JobListing jobListing) {
+        return new JobDTO(
+                jobListing.getTitle(),
+                jobListing.getDescription(),
+                jobListing.getCompany(),
+                jobListing.getCategory().name()
+        );
+    }
+
+    public static JobListing dtoToModel(JobDTO jobDTO) {
+        JobCategory category = null;
+        for (JobCategory jobCategory : JobCategory.values()) {
+            if (jobCategory.name().equalsIgnoreCase(jobDTO.getCategory()))
+                category = jobCategory;
+        }
+        if (category == null)
+            throw new DtoConversionException("Invalid job category: " + jobDTO.getCategory());
+
+        return new JobListing(
+                jobDTO.getTitle(),
+                jobDTO.getDescription(),
+                jobDTO.getCompany(),
+                category
+        );
     }
 
     public String getTitle() {
