@@ -1,5 +1,6 @@
 package hu.me.iit.controller;
 
+import hu.me.iit.exception.DtoConversionException;
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,18 +25,25 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(java.lang.NumberFormatException.class)
-    public Map<String, String> asd2(NumberFormatException nfe) {
+    public Map<String, String> numberFormatExceptionHandler(NumberFormatException e) {
         Map<String, String> ret = new HashMap<>();
-        ret.put("Description", nfe.getMessage());
+        ret.put("Description", e.getMessage());
         ret.put("Error", "Number conversion failed!");
         return ret;
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public String asd(IllegalArgumentException e) {
+    public String illegalArgumentExceptionHandler(IllegalArgumentException e) {
         return e.getMessage();
     }
 
+    @ExceptionHandler(DtoConversionException.class)
+    public Map<String, String> dtoConversionExceptionHandler(DtoConversionException e){
+        Map<String, String> ret = new HashMap<>();
+        ret.put("Description", e.getMessage());
+        ret.put("Error", "DTO Conversion failed");
+        return ret;
+    }
 
     //@ExceptionHandler(Exception.class)
     ///public String xd(Exception ex){
